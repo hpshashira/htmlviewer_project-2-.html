@@ -1,0 +1,192 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Export</title><style>/* Your CSS styles here */
+button:hover { transform: scale(1.05); transition: 0.2s; }</style></head><body><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Identify Yourself</title>
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #0a0f1f, #000);
+  color: #00ffcc;
+  font-family: monospace;
+  height: 100vh;
+}
+
+#screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main container */
+.container {
+  text-align: center;
+  width: 90%;
+}
+
+/* Title */
+h1 {
+  font-size: 6vw;
+  margin-bottom: 40px;
+  letter-spacing: 4px;
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  font-size: 2.5vw;
+}
+
+.option input {
+  margin-right: 15px;
+  transform: scale(1.5);
+}
+
+/* Button */
+button {
+  margin-top: 40px;
+  padding: 12px 30px;
+  border: 1px solid #00ffcc;
+  background: transparent;
+  color: #00ffcc;
+  font-size: 1.5vw;
+  cursor: pointer;
+}
+
+/* Error */
+.errorText {
+  color: red;
+  font-size: 5vw;
+  text-align: center;
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  0% {opacity: 1;}
+  50% {opacity: 0.3;}
+  100% {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="screen"></div>
+
+<script>
+let intervalRef;
+
+function home() {
+  clearInterval(intervalRef);
+
+  document.getElementById("screen").innerHTML = `
+    <div class="container">
+      <h1>IDENTIFY YOURSELF</h1>
+
+      <div class="options">
+        <div class="option">
+          <input type="radio" name="type" value="male"> <span>Male</span>
+        </div>
+        <div class="option">
+          <input type="radio" name="type" value="female"> <span>Female</span>
+        </div>
+        <div class="option">
+          <input type="radio" name="type" value="cyborg"> <span>Cyborg</span>
+        </div>
+      </div>
+
+      <button onclick="enter()">ENTER</button>
+    </div>
+  `;
+}
+
+function enter() {
+  const choice = document.querySelector('input[name="type"]:checked');
+  if (!choice) return;
+
+  if (choice.value === "male" || choice.value === "female") {
+    showError();
+  } else {
+    runCode();
+  }
+}
+
+function showError() {
+  clearInterval(intervalRef);
+
+  document.getElementById("screen").innerHTML = `
+    <div>
+      <div class="errorText">
+        ACCESS DENIED<br>HUMAN DETECTED
+      </div>
+      <button onclick="home()">REINITIALIZE</button>
+    </div>
+  `;
+}
+
+/* 🎬 Cinematic Hacker Code */
+function runCode() {
+  clearInterval(intervalRef);
+
+  document.getElementById("screen").innerHTML = `
+    <div style="position:relative; width:100%; height:100%;">
+      <canvas id="matrix"></canvas>
+      <button onclick="home()" style="position:absolute; bottom:20px; left:20px;">
+        REINITIALIZE
+      </button>
+    </div>
+  `;
+
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[]";
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+
+  const drops = Array(columns).fill(1);
+
+  intervalRef = setInterval(() => {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ffcc";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }, 50);
+}
+
+home();
+</script>
+
+</body>
+</html><script>// Your JavaScript code here
+console.log("HTML Viewer Online Ready!");</script></body></html>
